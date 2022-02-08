@@ -12,6 +12,7 @@
           :validate-on-rule-change="false"
           :disabled="disabled"
           v-bind="formAttrs"
+          :inline="inline"
         >
           <!-- 默认插槽作为表单项 -->
           <slot />
@@ -211,7 +212,7 @@ export default {
     // 标签宽度
     labelWidth: {
       type: [Number, String],
-      default: 'auto'
+      default: '6em'
     },
     // 全局禁用表单
     disabled: {
@@ -469,7 +470,7 @@ export default {
             }
 
             // layout值, 内部属性不显示
-            desc[field]._colAttrs = this.getColAttrs(desc[field].layout)
+            desc[field]._colAttrs = this.getColAttrs(desc[field].span)
 
             // 老数据, 用于options切换不同类型和type切换不懂类型时, 保留旧数据
             // 例如 原type为 switch, 后改为 input, 出现类型和值不兼容情况, 就需要保留原数据
@@ -518,8 +519,8 @@ export default {
       this.checkLinkage()
     },
     // 获取col的属性(是否为inline模式)
-    getColAttrs(layout) {
-      return this.inline ? { span: layout || 6 } : { md: layout || 24, xs: 24 }
+    getColAttrs(span) {
+      return this.inline ? { span: span || 'auto' } : { md: span || 24, xs: 24 }
     },
     // 重新模拟数据
     reMockData() {

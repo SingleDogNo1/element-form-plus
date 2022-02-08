@@ -1,15 +1,11 @@
 <template>
-  <div>
-    <el-card header="ele-form演示" style="max-width: 1200px; margin: 100px auto">
-      <ele-form
-        v-model="formData"
-        :form-desc="formDesc"
-        :request-fn="handleSubmit"
-        isShowResetBtn
-        @request-success="handleSuccess"
-      />
-    </el-card>
-  </div>
+  <ele-form
+    v-model="formData"
+    :form-desc="formDesc"
+    :request-fn="handleSubmit"
+    isShowResetBtn
+    @request-success="handleSuccess"
+  />
 </template>
 
 <script>
@@ -22,16 +18,19 @@ export default {
         title: {
           type: 'input',
           label: '标题',
-          required: true
+          required: true,
+          span: 6
         },
         content: {
           type: 'textarea',
           label: '内容',
+            span: 6,
           required: true // 必填简写
         },
         type: {
           type: 'radio',
           label: '类型',
+            span: 6,
           default: 1,
           options: [
             { text: '自制', value: 1 },
@@ -41,6 +40,7 @@ export default {
         category: {
           type: 'cascader',
           label: '分区',
+            span: 6,
           options: [
             {
               value: 'dongman',
@@ -63,11 +63,11 @@ export default {
             }
           ]
         },
-        label: {
-          type: 'tag',
-          label: '标签',
-          required: true
-        },
+        // label: {
+        //   type: 'tag',
+        //   label: '标签',
+        //   required: true
+        // },
         label2: {
           type: 'select',
           label: '标签 2',
@@ -107,7 +107,8 @@ export default {
 </script>
 
 <style>
+html,
 body {
-  background-color: #efefef;
+  margin: 0;
 }
 </style>

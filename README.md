@@ -34,6 +34,8 @@ Vue.use(EleForm, {
 
 ### 使用 ele-form 组件
 
+<a name="basic-demo"></a>
+
 ```vue
 <template>
     <ele-form
@@ -85,23 +87,16 @@ export default {
 
 ## Props
 
-|   参数    |           说明           |  类型  | 是否必填 |
-| :-------: | :----------------------: | :----: | :------: |
-| formDesc  |  [各表单项的描述](#aaa)  | Object |    是    |
-| formAttrs | `el-form` 本身的配置参数 | Object |    否    |
+|         参数          |           说明           |  类型   | 是否必填 |
+| :-------------------: | :----------------------: | :-----: | :------: |
+| [formDesc](#formDesc) |      各表单项的描述      | Object  |    是    |
+|       formAttrs       | `el-form` 本身的配置参数 | Object  |    否    |
+|       formData        |         表单数据         | Object  |    是    |
+|        inline         |         行内模式         | Boolean |    否    |
+|         rules         |    同 `el-form` 组件     | Object  |    否    |
 
 ```js
 props: {
-  // 表单数据, 一个对象即可
-  formData: {
-    type: Object,
-    required: true
-  },
-  // 行内模式
-  inline: {
-    type: Boolean,
-    default: false
-  },
   // 校检规则, 同原 element-ui form 组件的验证
   rules: Object,
   // 自定义表单按钮
@@ -210,8 +205,44 @@ props: {
 }
 ```
 
-<a name="aaa"></a>
+### 参数说明
 
-## asad
+#### formDesc
 
-adsda
+详见<a name="formDesc">formDesc</a>
+
+#### formAttrs
+
+```html
+<!-- 指定表单内组件的尺寸为small -->
+<ele-form
+  :form-attrs="{ size: 'small' }"
+/>
+```
+
+#### formData
+
+表单提交时的数据,初始给定空对象即可,必填.操作表单过程中,值会动态变化为`type: value`的对象. 参考[示例](#basic-demo),表单填写完成后的结果为
+
+```js
+  this.formData = {
+    title: '输入的标题',
+    content: '输入的内容',
+    type: 1 || 0
+  }
+```
+
+如果要为表单附初始值,同样只需要修改`formData`的值即可
+
+```js
+mounted() {
+  this.formData = {
+    title: 'hello, title',
+    content: 'hello, content',
+    type: 1
+  }
+
+  // 如果是单个赋值，使用 $set 触发响应式
+  this.$set(this.formData, 'title', 'hello, title')
+}
+```
