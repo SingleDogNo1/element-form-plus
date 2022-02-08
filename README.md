@@ -211,7 +211,7 @@ props: {
 
 详见[formDesc 参数说明](#formDescDetail)
 
-#### <a name="formDescTitle">formAttrs</a>
+#### <a name="formAttrs">formAttrs</a>
 
 ```html
 <!-- 指定表单内组件的尺寸为small -->
