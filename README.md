@@ -87,13 +87,13 @@ export default {
 
 ## Props
 
-|         参数          |           说明           |  类型   | 是否必填 |
-| :-------------------: | :----------------------: | :-----: | :------: |
-| [formDesc](#formDesc) |      各表单项的描述      | Object  |    是    |
-|       formAttrs       | `el-form` 本身的配置参数 | Object  |    否    |
-|       formData        |         表单数据         | Object  |    是    |
-|        inline         |         行内模式         | Boolean |    否    |
-|         rules         |    同 `el-form` 组件     | Object  |    否    |
+|            参数            |           说明           |  类型   | 是否必填 |
+| :------------------------: | :----------------------: | :-----: | :------: |
+| [formDesc](#formDescTitle) |      各表单项的描述      | Object  |    是    |
+|  [formAttrs](#formAttrs)   | `el-form` 本身的配置参数 | Object  |    否    |
+|          formData          |         表单数据         | Object  |    是    |
+|           inline           |         行内模式         | Boolean |    否    |
+|           rules            |    同 `el-form` 组件     | Object  |    否    |
 
 ```js
 props: {
@@ -207,11 +207,11 @@ props: {
 
 ### 参数说明
 
-#### formDesc
+#### <a name="formDescTitle">formDesc</a>
 
-详见<a name="formDesc">formDesc</a>
+详见[formDesc 参数说明](#formDescDetail)
 
-#### formAttrs
+#### <a name="formDescTitle">formAttrs</a>
 
 ```html
 <!-- 指定表单内组件的尺寸为small -->
