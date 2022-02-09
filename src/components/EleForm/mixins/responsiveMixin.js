@@ -25,7 +25,7 @@ export default {
       // inline模式默认表单宽度
       inlineDefaultSpan: 24,
       // 非inline模式默认表单宽度
-      layoutDefaultSpan: 22,
+      layoutDefaultSpan: 24,
       // 栅格布局枚举值
       colEnum: {
         xs: 24,

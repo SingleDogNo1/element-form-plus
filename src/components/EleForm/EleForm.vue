@@ -44,12 +44,24 @@
                   >
                     <el-form-item
                       :error="formErrorObj ? formErrorObj[field] : null"
-                      :label="
-                        isShowLabel && formItem.isShowLabel !== false ? formItem._label : null
-                      "
                       :label-width="formItem.labelWidth || null"
                       :prop="field"
                     >
+                      <template slot="label">
+                        <span>
+                          {{
+                            isShowLabel && formItem.isShowLabel !== false ? formItem._label : null
+                          }}
+                        </span>
+                        <el-popover trigger="hover">
+                          <i
+                            slot="reference"
+                            v-if="formItem._tip"
+                            class="el-icon-warning-outline"
+                          ></i>
+                          <div v-html="formItem._tip"></div>
+                        </el-popover>
+                      </template>
                       <!-- 具名 作用域插槽(用于用户自定义显示) -->
                       <slot
                         :data="formData[field]"
@@ -75,7 +87,6 @@
                           :value="formData[field]"
                         />
                       </slot>
-                      <div class="ele-form-tip" v-if="formItem._tip" v-html="formItem._tip"></div>
                     </el-form-item>
                   </el-col>
                 </slot>
@@ -88,12 +99,13 @@
                 <!-- 按钮插槽 -->
                 <slot :btns="btns" name="form-btn">
                   <el-button
-                    :key="index"
-                    @click="btn.click"
-                    v-bind="btn.attrs"
                     v-for="(btn, index) of btns"
-                    >{{ btn.text }}</el-button
+                    :key="index"
+                    v-bind="btn.attrs"
+                    @click="btn.click"
                   >
+                    {{ btn.text }}
+                  </el-button>
                 </slot>
               </el-form-item>
             </el-col>
@@ -165,7 +177,7 @@ export default {
     // 表单错误信息
     formError: Object,
     // 提交函数
-    requestFn: Function,
+    submitFn: Function,
     // 自定义表单按钮
     formBtns: Array,
     // 表单按钮大小
@@ -185,12 +197,12 @@ export default {
     // 默认值: 当 inline = true OR isDialog = true, 默认值为 false; 其它情况true. 具体请看计算属性: computedIsShowBackBtn
     isShowBackBtn: {
       type: Boolean,
-      default: null
+      default: false
     },
     // 是否显示reset按钮
     isShowResetBtn: {
       type: Boolean,
-      default: false
+      default: true
     },
     // 提交按钮文本
     // 默认值: 当 inline 为true时, 值为 '查询'; inline 为 false 时,  值为 '提交'. 具体请看计算属性: computedSubmitBtnText
@@ -245,14 +257,14 @@ export default {
     // 是否显示错误后的 notify
     isShowErrorNotify: {
       type: Boolean,
-      default: true
+      default: false
     },
     // 一些钩子
     beforeValidate: Function,
-    beforeRequest: Function,
-    requestSuccess: Function,
-    requestError: Function,
-    requestEnd: Function
+    beforeSubmitData: Function,
+    submitSuccess: Function,
+    submitError: Function,
+    submitEnd: Function
   },
   data() {
     return {
@@ -303,7 +315,8 @@ export default {
         const customBtns = this.formBtns.map(btn => ({
           attrs: {
             type: btn.type,
-            size: formBtnSize
+            size: formBtnSize,
+            ...btn.attrs
           },
           text: btn.text,
           click: btn.click
@@ -849,30 +862,30 @@ export default {
           }
         }
 
-        this.$emit('before-request', data)
-        if (this.beforeRequest) {
-          const beforeRequestData = this.beforeRequest(data)
-          if (beforeRequestData === false) return
-          if (typeof beforeRequestData === 'object') {
-            data = beforeRequestData
+        this.$emit('before-submit', data)
+        if (this.beforeSubmit) {
+          const beforeSubmitData = this.beforeSubmit(data)
+          if (beforeSubmitData === false) return
+          if (typeof beforeSubmitData === 'object') {
+            data = beforeSubmitData
           }
         }
 
-        if (this.requestFn) {
+        if (this.submitFn) {
           // 在内部请求
           if (this.innerIsLoading) return
           this.innerIsLoading = true
           try {
-            const response = await this.requestFn(data)
+            const response = await this.submitFn(data)
             this.$nextTick(() => {
-              this.$emit('request-success', response)
-              if (this.requestSuccess) {
-                this.requestSuccess(response)
+              this.$emit('submit-success', response)
+              if (this.submitSuccess) {
+                this.submitSuccess(response)
               }
             })
           } catch (error) {
-            if (this.requestError) {
-              this.requestError(error)
+            if (this.submitError) {
+              this.submitError(error)
             }
 
             console.error(error)
@@ -890,13 +903,13 @@ export default {
               // 返回的是对象类型, 则直接设置
               this.innerFormError = error
             }
-            this.$emit('request-error')
+            this.$emit('submit-error')
           } finally {
             this.innerIsLoading = false
-            if (this.requestEnd) {
-              this.requestEnd()
+            if (this.submitEnd) {
+              this.submitEnd()
             }
-            this.$emit('request-end')
+            this.$emit('submit-end')
           }
         } else {
           // 在外部请求

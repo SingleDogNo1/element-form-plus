@@ -8,7 +8,7 @@ import EleForm from '@/components/EleForm'
 Vue.use(ElementUI)
 Vue.use(EleForm, {
   number: {
-    min: 10
+    min: 1
   }
 })
 

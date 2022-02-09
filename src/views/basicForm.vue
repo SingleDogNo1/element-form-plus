@@ -1,31 +1,25 @@
 <template>
   <div>
-    <BasicForm />
-    <DynamicType />
-    <CustomComp />
-    <GroupForm />
-    <SectionForm />
-    <DialogForm />
+    <el-divider>基础使用</el-divider>
+    <ele-form
+      ref="EleFormRef"
+      v-model="formData"
+      :form-desc="formDesc"
+      :submit-fn="handleSubmit"
+      @before-validate="handleBeforeValidate"
+      @before-submit="handleBeforeSubmit"
+      @submit-success="handleSuccess"
+      @submit-error="handleSubmitError"
+      @submit-end="handleSubmitEnd"
+    />
+    <el-button @click="submitForm">普通按钮调用组件方法提交</el-button>
   </div>
 </template>
 
 <script>
-import BasicForm from './views/basicForm'
-import DynamicType from './views/DynamicType'
-import CustomComp from './views/CustomComp'
-import GroupForm from './views/GroupForm.vue'
-import SectionForm from './views/SectionForm'
-import DialogForm from './views/DialogForm'
-
 export default {
-  components: {
-    BasicForm,
-    DynamicType,
-    CustomComp,
-    GroupForm,
-    SectionForm,
-    DialogForm
-  },
+  name: '',
+  components: {},
   data() {
     return {
       // 表单数据
@@ -33,7 +27,7 @@ export default {
         sex: 1,
         title: 'adasd',
         content: 'fsdfdsfdf',
-        label: ['dasdasd'],
+        label: ['vue'],
         label2: 123,
         pictures: ['https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg']
       },
@@ -86,7 +80,9 @@ export default {
         title: {
           type: 'input',
           label: '标题',
-          required: true
+          required: true,
+          tip: '<h1>文章标题</h1>',
+          disabled: false
         },
         content: {
           type: 'textarea',
@@ -130,6 +126,7 @@ export default {
         label: {
           type: 'tag',
           label: '标签',
+          options: ['vue', 'js', 'node'],
           required: true
         },
         label2: {
@@ -155,8 +152,7 @@ export default {
           label: '年龄',
           required: true
         }
-      },
-      isShowDialog: false
+      }
     }
   },
   methods: {
@@ -179,14 +175,10 @@ export default {
     },
     handleSubmitEnd() {
       console.log('handleSubmitEnd :>> ')
+    },
+    handleBeforeValidate(data) {
+      console.log('handleBeforeValidate :>> ', data)
     }
   }
 }
 </script>
-
-<style>
-html,
-body {
-  margin: 0;
-}
-</style>

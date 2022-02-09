@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="ele-form-image"
-    v-if="Array.isArray(newValue)"
-  >
+  <div class="ele-form-image" v-if="Array.isArray(newValue)">
     <el-image
       :class="desc.class"
       :key="image"
@@ -12,7 +9,11 @@
       v-bind="attrs"
       v-for="image of newValue"
       v-on="onEvents"
-    ></el-image>
+    >
+      <div slot="error" class="image-error">
+        <i class="el-icon-picture-outline"></i>
+      </div>
+    </el-image>
   </div>
 </template>
 
@@ -22,7 +23,7 @@ import formMixin from '../mixins/formMixin'
 export default {
   name: 'EleFormImage',
   mixins: [formMixin],
-  data () {
+  data() {
     return {
       type: ['Array', 'String'],
       defaultStyle: {
@@ -36,12 +37,12 @@ export default {
     }
   },
   computed: {
-    styles () {
+    styles() {
       return Object.assign({}, this.defaultStyle, this.desc.style)
     }
   },
   methods: {
-    previewList (image) {
+    previewList(image) {
       if (Array.isArray(this.newValue)) {
         const list = this.newValue.filter(item => item !== image)
         list.unshift(image)
@@ -50,7 +51,7 @@ export default {
         return []
       }
     },
-    customInit (val) {
+    customInit(val) {
       if (typeof val === 'string') {
         val = [val]
       }
@@ -60,7 +61,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .ele-form-image {
   line-height: 1em;
 }
@@ -69,5 +70,16 @@ export default {
   margin-right: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
+}
+
+::v-deep .image-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 30px;
+  background: #f5f7fa;
+  color: #909399;
 }
 </style>
