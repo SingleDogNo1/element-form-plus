@@ -731,14 +731,12 @@ export default {
         } else {
           if (typeof options === 'string') {
             throw new TypeError(
-              `options值为: ${options}, 为字符串, 但是未配置options-fn参数, 具体请参考: https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav#ZVYtf`
+              `options值为: ${options}, 为字符串, 但是未配置options-fn参数, 具体请参考文档`
             )
           } else {
             // 其他报错
             throw new TypeError(
-              'options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise或者URL地址, 当前值为: ' +
-                options +
-                ', 不属于以上四种类型, 具体请参考: https://www.yuque.com/chaojie-vjiel/vbwzgu/rgenav'
+              `options的类型不正确, options及options请求结果类型可为: 字符串数组, 对象数组, 函数和Promise或者URL地址, 当前值为:${options}, 不属于以上四种类型, 具体请参考文档`
             )
           }
         }
