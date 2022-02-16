@@ -122,9 +122,8 @@ import { isUnDef, is, castArray, isEmpty } from './tools/utils'
 import { throttle } from 'throttle-debounce'
 import localeMixin from './mixins/locale'
 import { t } from './locale'
+import { cloneDeep, isNumber } from 'lodash'
 import { loadMockJs } from './tools/mock'
-const isNumber = require('is-number')
-const cloneDeep = require('clone')
 
 export default {
   name: 'EleForm',
@@ -818,7 +817,9 @@ export default {
         }, [])
         this.showError(messageArr)
         // eslint-disable-next-line
-      } catch {}
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     // 显示错误
@@ -896,7 +897,9 @@ export default {
                   this.innerFormError = msg
                 }
                 // eslint-disable-next-line
-              } catch {}
+              } catch (error) {
+                console.log(error)
+              }
             } else if (error instanceof Object) {
               // 返回的是对象类型, 则直接设置
               this.innerFormError = error

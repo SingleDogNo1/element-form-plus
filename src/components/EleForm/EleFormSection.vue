@@ -72,7 +72,7 @@
                     >
                       <!-- 具名 作用域插槽(用于用户自定义显示) -->
                       <slot
-                        ::data="formData[field]"
+                        :data="formData[field]"
                         :desc="formDesc[field]"
                         :props="props"
                         :field="field"

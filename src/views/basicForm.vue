@@ -24,12 +24,12 @@ export default {
     return {
       // 表单数据
       formData: {
-        sex: 1,
-        title: 'adasd',
-        content: 'fsdfdsfdf',
-        label: ['vue'],
-        label2: 123,
-        pictures: ['https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg']
+        // sex: 1,
+        // title: 'adasd',
+        // content: 'fsdfdsfdf',
+        // label: ['vue'],
+        // label2: 123,
+        // pictures: ['https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg']
       },
 
       formDesc: {
